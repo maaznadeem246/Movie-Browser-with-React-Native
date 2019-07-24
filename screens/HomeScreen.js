@@ -2,7 +2,7 @@ import React from 'react';
 
 import {View,Text,TextInput,StyleSheet} from "react-native"
 import Movies from "../components/movies"
-
+import {movieData} from "../api"
 export default class HomeScreen extends React.Component{
     constructor(props){
         super(props);
@@ -21,19 +21,22 @@ export default class HomeScreen extends React.Component{
         }
     }
 
-    bringData(text){
-        fetch(`http://www.omdbapi.com/?apikey=ea66382d&s=${text}`)
-            .then((response) => response.json())
-            .then((responseJson) => {
-
-                if(this.state.searchValue != ''){ 
+    bringData = async (text) => {
+        try{
+        const result = await movieData(text)
+           // console.log(result)       
+        if(this.state.searchValue != ''){
+                 
                 this.setState({
-                    moviesData: responseJson.Search,
-                    moiveresponse: responseJson.Response,
-                    message: responseJson.Error
+                    moviesData: result.Search,
+                    moiveresponse: result.Response,
                 })
                 }
+        }catch(err){
+            this.setState({
+                message:err.message
             })
+        }
     }
 
     handleChange(text){

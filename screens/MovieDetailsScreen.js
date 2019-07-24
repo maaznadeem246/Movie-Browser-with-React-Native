@@ -2,6 +2,7 @@ import React from 'react';
 
 import { View, Text, StyleSheet } from "react-native"
 import MovieDetails from "../components/movieDetails"
+import {movieDetails} from '../api';
 
 export default class MovieDetailsScreen extends React.Component {
     constructor(props){
@@ -20,20 +21,24 @@ export default class MovieDetailsScreen extends React.Component {
         message: 'Loading'
     }
 
-    bringMovieDetails(id){
+    bringMovieDetails = async (id) => {
         //console.log(id)
-        fetch(`http://www.omdbapi.com/?apikey=ea66382d&i=${id}`)
-            .then((response) => response.json())
-            .then((responseJson) => {
+        try{
+        const result = await movieDetails(id)
                 if (this.state.searchValue != '') {
                    // console.log(responseJson)
                     this.setState({
-                        moviesData: responseJson,
-                        moiveresponse: responseJson.Response,
-                        message: responseJson.Error 
+                        moviesData: result,
+                        moiveresponse: result.Response,
+                        
                     })
                 }
-            })
+    }catch(err) {
+        this.setState({
+            message: err.message
+        })
+    }
+
     }
 
     componentDidMount(){
