@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View,Text,FlatList,StyleSheet } from "react-native";
+import { View,FlatList,StyleSheet } from "react-native";
 import Movie from '../components/movie';
 
 export default class Movies extends React.Component{

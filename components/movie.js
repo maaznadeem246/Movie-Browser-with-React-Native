@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View, Text, StyleSheet,Image, TouchableHighlight ,TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet,Image, TouchableOpacity } from "react-native";
 
 export default class Movie extends React.Component{
     constructor(props){
